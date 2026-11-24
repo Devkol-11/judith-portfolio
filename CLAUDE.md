@@ -30,6 +30,10 @@ Installed globally in `~/.claude/skills/`:
 - `design-taste-frontend`: Taste (anti-generic design choices)
 - `impeccable`: design quality checks, critique and refinement
 
+## Design guide
+
+`project_md/theme.md` is the single design guide (palette, fonts, shapes, rose background, components, motion, checklist). Follow it for all UI work; update it when a design decision changes. Colour inspiration images live in `inspo/`.
+
 ## Status
 
-Phase 1 (workspace setup) is done. Phase 2 (design) has not started: no fonts, colors, layouts or content chosen yet.
+Phase 1 (workspace setup) is done. Phase 2 (design) has a draft guide in `project_md/theme.md` with open decisions in its section 12. No UI built yet.
