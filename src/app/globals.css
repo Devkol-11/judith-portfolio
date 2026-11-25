@@ -2,246 +2,426 @@
 
 /* Design tokens. Source of truth: project_md/theme.md */
 @theme {
-  --color-blush: #ebdcd8;
-  --color-petal: #c98c88;
-  --color-petal-deep: #a85865;
-  --color-leaf: #7a7650;
-  --color-paper: #f8ede6;
-  --color-clay: #dda594;
-  --color-wine: #6b273b;
-  --color-sepia: #7a4a45;
-  --color-ink: #3a1418;
-  --color-marigold: #e5a963;
-  --color-navy: #1f3e63;
-
-  --shadow-sticker-sm: 3px 3px 0 var(--color-ink);
-  --shadow-sticker-md: 5px 5px 0 var(--color-ink);
-  --shadow-sticker-lg: 8px 8px 0 var(--color-ink);
-
-  --radius-wobble-a: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  --radius-wobble-b: 15px 225px 15px 255px / 255px 15px 225px 15px;
-  --radius-wobble-c: 225px 20px 240px 15px / 20px 240px 15px 225px;
-  --radius-wobble-pill: 999px 60px 999px 70px / 70px 999px 60px 999px;
+  --color-ink: #1d1d1f;
+  --color-mute: #6e6e73;
+  --color-mist: #f5f5f7;
+  /* Pink: pairs with the pale-blue water. `pop` fills (with ink text, 5.9:1),
+     `accent` is the deeper raspberry for text links (5.5:1 on white, 5.0 on the water). */
+  --color-pop: #ff5fa2;
+  --color-accent: #c81e66;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @theme inline {
-  --font-display: var(--font-caprasimo);
-  --font-body: var(--font-nunito);
-  --font-hand: var(--font-caveat);
+  --font-sans: var(--font-geist);
+  --font-playfair: var(--font-playfair-src);
 }
 
 html {
   color-scheme: light;
-  scrollbar-color: var(--color-petal-deep) var(--color-blush);
+  background: #fff;
 }
 
 body {
-  background-color: var(--color-blush);
-  background-image: url("/images/rose-pattern.svg");
-  background-repeat: repeat;
-  background-size: 360px 360px;
+  background: #fff;
   color: var(--color-ink);
-  font-family: var(--font-body), ui-rounded, system-ui, sans-serif;
+  font-family: var(--font-geist), system-ui, sans-serif;
   font-size: 1.0625rem;
-  line-height: 1.6;
+  line-height: 1.47;
+  letter-spacing: -0.01em;
 }
 
 ::selection {
-  background: var(--color-marigold);
-  color: var(--color-ink);
+  background: rgb(255 95 162 / 0.25);
+}
+
+/* Top bar: frosted by default; where scroll timelines exist it starts fully
+   transparent over the hero's water and frosts as the hero scrolls away. */
+.nav-glass {
+  background: rgb(255 255 255 / 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 0.06);
+}
+
+@supports (animation-timeline: scroll()) {
+  .nav-glass {
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    animation: nav-frost linear both;
+    animation-timeline: scroll();
+    animation-range: 55vh 85vh;
+  }
+}
+
+@keyframes nav-frost {
+  to {
+    background: rgb(255 255 255 / 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 1px 0 rgb(0 0 0 / 0.06);
+  }
 }
 
 :focus-visible {
-  outline: 3px dashed var(--color-ink);
-  outline-offset: 4px;
-}
-
-@media (prefers-contrast: more) {
-  body {
-    background-image: none;
-  }
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 @layer components {
-  /* Solid panel with ink outline, sticker shadow and paper grain */
-  .sticker {
-    position: relative;
-    isolation: isolate;
-    border: 3px solid var(--color-ink);
-    box-shadow: var(--shadow-sticker-md);
-    rotate: var(--tilt, 0deg);
+  /* Hero: each line fades up after the one before */
+  .fade-in {
+    animation: fade-up 1s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 120ms);
   }
 
-  .sticker::before {
+  /* Hero words flow up from behind an invisible baseline, in reading order */
+  .flow-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  .flow-word {
+    display: inline-block;
+    animation: flow-up 1100ms var(--ease-out) both;
+    animation-delay: calc(150ms + var(--w, 0) * 110ms);
+  }
+
+  /* ---- Hero name ------------------------------------------------------ */
+
+  /* "Judith": each letter springs up with a soft, bouncy overshoot */
+  .bounce-letter {
+    animation: bounce-in 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: calc(200ms + var(--i, 0) * 60ms);
+  }
+
+  /* "Urevbu": pink italic letters twirl in, then a shimmer of light drifts
+     across them every few seconds. Padding keeps italic overhangs inside the
+     painted area so the gradient text isn't clipped. */
+  .twirl-letter {
+    padding-inline: 0.08em;
+    margin-inline: -0.08em;
+    color: transparent;
+    background: linear-gradient(100deg, #e0307d 0%, #e0307d 42%, #ffc2dd 50%, #e0307d 58%, #e0307d 100%);
+    background-size: 400% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation:
+      twirl-in 1100ms cubic-bezier(0.34, 1.56, 0.64, 1) both,
+      shimmer 5.5s ease-in-out infinite;
+    animation-delay:
+      calc(550ms + var(--i, 0) * 85ms),
+      calc(2.2s + var(--i, 0) * 110ms);
+  }
+
+  /* Flourish under the surname draws itself like a pen stroke */
+  .swash path {
+    fill: none;
+    stroke: var(--color-pop);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    /* with a non-scaling stroke the dash is measured on screen, so use a
+       length longer than the flourish ever gets */
+    stroke-dasharray: 1600;
+    stroke-dashoffset: 1600;
+    animation: draw 1.3s cubic-bezier(0.65, 0, 0.35, 1) 1.45s forwards;
+  }
+
+  /* Sparkles twinkle around the name */
+  .sparkle {
+    fill: var(--color-pop);
+    opacity: 0;
+    animation: twinkle 3s ease-in-out infinite;
+    animation-delay: calc(1.7s + var(--i, 0) * 0.55s);
+  }
+
+  .sparkle:nth-of-type(even) {
+    fill: #ffb3d4;
+  }
+
+  /* Scroll hint: a pink bead slides down the line */
+  .scroll-cue::after {
     content: "";
     position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0.05;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    inset-inline: 0;
+    top: 0;
+    height: 40%;
+    background: var(--color-pop);
+    animation: cue 1.8s ease-in-out infinite;
   }
 
-  /* Lifts and straightens on hover; .sticker-press also presses flat on click (links only) */
-  .sticker-lift {
+  /* ---- Selected work ---------------------------------------------------- */
+
+  /* Cards rise in one after another (also replays when a filter changes) */
+  .reel-in {
+    animation: rise-in-soft 700ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  .reel-zoom {
+    transition: transform 900ms var(--ease-out);
+  }
+
+  .reel-play {
+    opacity: 0;
+    scale: 0.7;
     transition:
-      translate 180ms var(--ease-out),
-      rotate 180ms var(--ease-out),
-      box-shadow 180ms var(--ease-out);
+      opacity 300ms var(--ease-out),
+      scale 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .sticker-lift:hover {
-      translate: -3px -3px;
-      rotate: 0deg;
-      box-shadow: var(--shadow-sticker-lg);
+    .group\/reel:hover .reel-zoom {
+      transform: scale(1.06);
+    }
+
+    .group\/reel:hover .reel-play {
+      opacity: 1;
+      scale: 1;
     }
   }
 
-  .sticker-press:active {
-    translate: 3px 3px;
-    box-shadow: 1px 1px 0 var(--color-ink);
-    transition-duration: 100ms;
+  .group\/reel:focus-visible .reel-play {
+    opacity: 1;
+    scale: 1;
   }
 
-  .button-sticker {
-    border: 2px solid var(--color-ink);
-    border-radius: var(--radius-wobble-pill);
-    box-shadow: var(--shadow-sticker-sm);
-    transition:
-      translate 180ms var(--ease-out),
-      box-shadow 180ms var(--ease-out);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .button-sticker:hover {
-      translate: -2px -2px;
-      box-shadow: 5px 5px 0 var(--color-ink);
+  /* Phones and tablets have no hover: keep the play button visible but small */
+  @media (hover: none) {
+    .reel-play {
+      opacity: 0.95;
+      scale: 0.75;
     }
   }
 
-  .button-sticker:active {
-    translate: 2px 2px;
-    box-shadow: 1px 1px 0 var(--color-ink);
-    transition-duration: 100ms;
+  /* Player window fades and lifts in */
+  .player[open] {
+    animation: player-in 450ms var(--ease-out);
   }
 
-  .link-ink {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-color: var(--color-marigold);
-    text-underline-offset: 3px;
-    transition: text-decoration-thickness 180ms var(--ease-out);
+  .player[open]::backdrop {
+    animation: fade-only 300ms ease;
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .link-ink:hover {
-      text-decoration-thickness: 4px;
-    }
+  /* ---- Brands marquee ------------------------------------------------- */
+
+  .marquee-row {
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
   }
 
-  /* Load: the hero drops in like a placed sticker */
-  .enter-drop {
-    animation: sticker-drop 500ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  .marquee-track {
+    animation: marquee 50s linear infinite;
   }
 
-  /* Scroll: tied to scroll position with CSS scroll timelines, no JavaScript.
-     Browsers without support (and reduced-motion users) simply see everything in place. */
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: view()) {
-      .reveal-card {
-        animation: card-peel var(--ease-out) both;
-        animation-timeline: view();
-        animation-range: entry 5% entry 80%;
-      }
-
-      .reveal-card:nth-child(even) {
-        animation-name: card-peel-alt;
-      }
-
-      .reveal-heading {
-        animation: heading-wiggle var(--ease-out) both;
-        animation-timeline: view();
-        animation-range: entry 10% entry 90%;
-      }
-
-      .reveal-panel {
-        animation: panel-rise var(--ease-out) both;
-        animation-timeline: view();
-        animation-range: entry 0% entry 60%;
-      }
-
-      .hero-exit {
-        animation: hero-lift linear both;
-        animation-timeline: view();
-        animation-range: exit 0% exit 100%;
-      }
-    }
+  .marquee-reverse {
+    animation-direction: reverse;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .enter-drop {
-      animation: fade-in 200ms ease both;
+  .marquee-row:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Sections and cards ease into view as they scroll in (no JavaScript).
+     Browsers without scroll timelines show everything in place. */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
     }
 
-    .sticker-lift:hover,
-    .sticker-press:active,
-    .button-sticker:hover,
-    .button-sticker:active {
-      translate: none;
-      rotate: var(--tilt, 0deg);
+    /* Right-hand column arrives a beat after the left */
+    .reveal:nth-child(even) {
+      animation-range: entry 8% entry 63%;
+    }
+
+    /* Hero content drifts up and fades as the page scrolls past it */
+    .hero-exit {
+      animation: hero-out linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+
+    /* The grey work band opens out to full width as it arrives */
+    .band-in {
+      animation: band-open linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
     }
   }
 }
 
-@keyframes sticker-drop {
-  from {
-    opacity: 0.6;
-    transform: scale(0.96);
-  }
-}
-
-@keyframes card-peel {
+@keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(48px) rotate(4deg) scale(0.94);
+    transform: translateY(56px) scale(0.98);
   }
 }
 
-@keyframes card-peel-alt {
-  from {
-    opacity: 0;
-    transform: translateY(48px) rotate(-4deg) scale(0.94);
-  }
-}
-
-@keyframes heading-wiggle {
-  from {
-    opacity: 0;
-    transform: rotate(-8deg) scale(0.9);
-  }
-}
-
-@keyframes panel-rise {
-  from {
-    opacity: 0.2;
-    transform: translateY(64px) scale(0.97);
-  }
-}
-
-@keyframes hero-lift {
+@keyframes hero-out {
   to {
-    opacity: 0.35;
-    transform: translateY(-48px) rotate(-1.5deg) scale(0.97);
+    opacity: 0;
+    transform: translateY(-90px) scale(0.96);
   }
 }
 
-@keyframes fade-in {
+@keyframes band-open {
+  from {
+    clip-path: inset(0 4% 0 4%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes rise-in-soft {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+
+@keyframes player-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: translateY(0.55em) scale(0.6);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-0.06em) scale(1.04);
+  }
+}
+
+@keyframes twirl-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.45em) rotate(-28deg) scale(0.4);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(0.04em) rotate(4deg) scale(1.06);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  35%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.2) rotate(0deg);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1) rotate(90deg);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(0.4) rotate(140deg);
+  }
+}
+
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(260%);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes flow-up {
+  from {
+    transform: translateY(110%);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-exit,
+  .band-in,
+  .reel-in,
+  .player[open],
+  .bounce-letter,
+  .twirl-letter,
+  .sparkle,
+  .scroll-cue::after {
+    animation: none;
+  }
+
+  .swash path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .sparkle {
+    opacity: 0.8;
+  }
+
+  /* Brands: a still, centred grid instead of moving rows */
+  .marquee-row {
+    mask-image: none;
+  }
+
+  .marquee-track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 1.5rem;
+  }
+
+  .marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
+
+  .fade-in,
+  .reveal,
+  .flow-word {
+    animation: fade-only 400ms ease both;
+    animation-timeline: auto;
+  }
+}
+
+@keyframes fade-only {
   from {
     opacity: 0;
   }

@@ -1,33 +1,34 @@
 import type { Metadata } from "next";
-import { Caprasimo, Caveat, Nunito } from "next/font/google";
+import { Geist, Playfair_Display } from "next/font/google";
+import "lenis/dist/lenis.css";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { profile } from "@/content/site";
 import "./globals.css";
 
-const caprasimo = Caprasimo({
-  variable: "--font-caprasimo",
-  weight: "400",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
 });
 
-const nunito = Nunito({
-  variable: "--font-nunito",
+// Elegant italic used only for "Urevbu" in the hero
+const playfair = Playfair_Display({
+  variable: "--font-playfair-src",
   subsets: ["latin"],
-});
-
-const caveat = Caveat({
-  variable: "--font-caveat",
-  subsets: ["latin"],
+  style: ["italic"],
 });
 
 export const metadata: Metadata = {
   title: `${profile.name} · ${profile.role}`,
-  description: `${profile.name} is a video editor. See her work on YouTube and Instagram and get in touch.`,
+  description: profile.intro,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${caprasimo.variable} ${nunito.variable} ${caveat.variable} antialiased`}>
-      <body className="min-h-dvh">{children}</body>
+    <html lang="en" className={`${geist.variable} ${playfair.variable} antialiased`}>
+      <body className="min-h-dvh">
+        <SmoothScroll />
+        {children}
+      </body>
     </html>
   );
 }

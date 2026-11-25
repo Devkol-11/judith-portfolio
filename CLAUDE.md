@@ -32,8 +32,8 @@ Installed globally in `~/.claude/skills/`:
 
 ## Design guide
 
-`project_md/theme.md` is the single design guide (palette, fonts, shapes, rose background, components, motion, checklist). Follow it for all UI work; update it when a design decision changes. Colour inspiration images live in `inspo/`.
+`project_md/theme.md` is the single design guide (v3, simple one-pager). Follow it for all UI work; update it when a design decision changes. Earlier directions are archived in `project_md/archive/` for reference only.
 
 ## Status
 
-Phase 1 (workspace setup) is done. Phase 2 (design) has a draft guide in `project_md/theme.md` with open decisions in its section 12. No UI built yet.
+The v3 one-page site is built: fade-in hero, reel cards with click-to-play Instagram embeds, contact panel. Partner brands, reel titles, email and social links in `src/content/site.ts` are still placeholders.

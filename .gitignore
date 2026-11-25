@@ -40,5 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# third-party inspiration images (Pinterest), kept local, not published
+# third-party inspiration images and original logo files, kept local, not published
 /inspo/
+/assets/
