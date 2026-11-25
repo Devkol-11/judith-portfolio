@@ -8,14 +8,14 @@ import { BrandMark } from "./BrandMark";
 // and the description over a soft gradient. Hover zooms the frame and shows a
 // pink play button. Clicking opens the player.
 export function ReelCard({ reel, onOpen, priority }: { reel: Reel; onOpen: () => void; priority?: boolean }) {
-  const brand: Brand = brands[reel.brand];
+  const brand: Brand | null = reel.brand ? brands[reel.brand] : null;
   const cover = reelCover(reel.url);
 
   return (
     <button
       type="button"
       onClick={onOpen}
-      aria-label={`Play “${reel.title}” with ${brand.name}`}
+      aria-label={brand ? `Play “${reel.title}” with ${brand.name}` : `Play “${reel.title}”`}
       className="group/reel bg-ink relative block aspect-9/16 w-full cursor-pointer overflow-hidden text-left text-white"
     >
       {cover && (
@@ -35,7 +35,7 @@ export function ReelCard({ reel, onOpen, priority }: { reel: Reel; onOpen: () =>
         className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_0_0/0.18)_0%,transparent_20%,transparent_50%,rgb(0_0_0/0.85)_100%)]"
       />
 
-      <BrandMark brand={brand} className="absolute top-4 left-4 size-10 shadow-md md:size-11" />
+      {brand?.logo && <BrandMark brand={brand} className="absolute top-4 left-4 size-10 shadow-md md:size-11" />}
 
       {/* play button appears on hover / focus */}
       <span

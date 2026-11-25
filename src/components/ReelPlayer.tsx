@@ -25,7 +25,7 @@ export function ReelPlayer({ reel, onClose }: { reel: Reel | null; onClose: () =
     if (!reel && dialog.open) dialog.close();
   }, [reel]);
 
-  const brand: Brand | null = reel ? brands[reel.brand] : null;
+  const brand: Brand | null = reel?.brand ? brands[reel.brand] : null;
   const embed = reel ? instagramEmbed(reel.url) : null;
 
   return (
@@ -36,7 +36,7 @@ export function ReelPlayer({ reel, onClose }: { reel: Reel | null; onClose: () =
       aria-label={reel ? `Playing ${reel.title}` : "Reel player"}
       className="player m-auto max-h-[92dvh] w-[min(94vw,56rem)] max-w-none overflow-hidden bg-white p-0 backdrop:bg-[rgb(20_20_30/0.55)] backdrop:backdrop-blur-md"
     >
-      {reel && brand && (
+      {reel && (
         <div className="grid md:grid-cols-[minmax(0,25rem)_1fr]">
           <div className="bg-mist h-[min(78dvh,44rem)] md:h-[min(86dvh,46rem)]">
             {embed && (
@@ -51,13 +51,17 @@ export function ReelPlayer({ reel, onClose }: { reel: Reel | null; onClose: () =
 
           <div className="flex flex-col p-7 md:p-10">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <BrandMark brand={brand} className="size-11" />
-                <div>
-                  <p className="text-mute text-xs">Made with</p>
-                  <p className="font-semibold">{brand.name}</p>
+              {brand ? (
+                <div className="flex items-center gap-3">
+                  {brand.logo && <BrandMark brand={brand} className="size-11" />}
+                  <div>
+                    <p className="text-mute text-xs">Made with</p>
+                    <p className="font-semibold">{brand.name}</p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <p className="text-mute text-sm">Shot and edited by Judith</p>
+              )}
               <button
                 ref={closeRef}
                 type="button"

@@ -16,7 +16,7 @@ function Sparkle({ className, style }: { className: string; style?: CSSPropertie
 // All CSS; screen readers get the plain name.
 export function HeroName({ first, last }: { first: string; last: string }) {
   return (
-    <h1 className="hero-name relative mt-1 text-[clamp(3.5rem,10vw,8.5rem)] leading-[1.05] font-semibold tracking-[-0.045em]">
+    <h1 className="hero-name relative mt-1 text-[clamp(3.5rem,8vw,7.25rem)] leading-[1.05] font-semibold tracking-[-0.045em]">
       <span className="sr-only">
         {first} {last}
       </span>

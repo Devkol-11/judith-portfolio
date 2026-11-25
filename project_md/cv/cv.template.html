@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Judith Urevbu · Video Editor CV</title>
+<!-- Source for public/judith-urevbu-cv.pdf. Icon markers are filled in by the build step (see README.md). -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=block"
+  rel="stylesheet"
+/>
+<style>
+  @page { size: A4; margin: 0; }
+  :root { --ink:#1d1d1f; --body:#33333a; --mute:#66666d; --line:#ebebf0; --pink:#e0307d; --rasp:#c81e66; --blush:#fff2f7; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { font-family:"Geist",Arial,sans-serif; color:var(--body); font-size:9.3pt; line-height:1.5; }
+  .page { width:210mm; height:297mm; position:relative; overflow:hidden; padding:14mm 15mm 13mm; page-break-after:always; }
+  .page:last-child { page-break-after:auto; }
+  .glow { position:absolute; border-radius:50%; z-index:-1; }
+  .glow.p { width:130mm; height:130mm; top:-60mm; right:-45mm; background:radial-gradient(circle,rgba(255,95,162,.15),transparent 65%); }
+  .glow.b { width:120mm; height:120mm; bottom:-60mm; left:-50mm; background:radial-gradient(circle,rgba(120,180,240,.14),transparent 65%); }
+  .ic { width:3.4mm; height:3.4mm; flex:none; }
+
+  /* Header */
+  header { display:grid; grid-template-columns:31mm 1fr; gap:7mm; align-items:center; }
+  .photo { width:31mm; height:31mm; border-radius:50%; overflow:hidden; border:1.2mm solid #fff; box-shadow:0 0 0 .5mm var(--pink), 0 6mm 12mm -6mm rgba(224,48,125,.5); }
+  .photo img { width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
+  h1 { font-size:29pt; font-weight:600; letter-spacing:-.045em; line-height:1; color:var(--ink); }
+  h1 em { font-family:"Playfair Display",Georgia,serif; font-style:italic; font-weight:600; color:var(--pink); letter-spacing:-.02em; font-size:1.07em; }
+  .headline { margin-top:2.6mm; font-size:8.2pt; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--rasp); }
+  .contact { margin-top:3.6mm; display:flex; flex-wrap:wrap; gap:1.6mm 5mm; font-size:8.4pt; color:var(--ink); }
+  .contact span { display:inline-flex; align-items:center; gap:1.4mm; }
+  .contact .ic { color:var(--pink); }
+  .contact a { color:inherit; text-decoration:none; }
+
+  /* Highlights */
+  .stats { margin-top:6.5mm; display:grid; grid-template-columns:repeat(4,1fr); background:var(--blush); border-radius:3mm; padding:3.8mm 2mm; }
+  .stat { text-align:center; border-left:.3mm solid rgba(224,48,125,.18); }
+  .stat:first-child { border-left:0; }
+  .stat b { display:block; font-size:15pt; font-weight:600; letter-spacing:-.03em; color:var(--ink); line-height:1.1; }
+  .stat span { font-size:7.4pt; color:var(--mute); }
+
+  /* Sections */
+  h2 { display:flex; align-items:center; gap:2.4mm; margin:6.5mm 0 2.8mm; font-size:8.6pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); }
+  h2 .badge { display:grid; place-items:center; width:6mm; height:6mm; border-radius:50%; background:var(--blush); color:var(--pink); }
+  h2 .badge .ic { width:3.3mm; height:3.3mm; }
+  h2::after { content:""; flex:1; height:.3mm; background:var(--line); }
+  p.lead { font-size:9.5pt; color:var(--body); }
+  strong { color:var(--ink); font-weight:600; }
+
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:0 6mm; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:0 8mm; }
+  h3 { font-size:8.9pt; font-weight:600; color:var(--ink); margin-bottom:1.6mm; }
+  ul { list-style:none; }
+  li { position:relative; padding-left:3.6mm; margin-bottom:1.1mm; }
+  li::before { content:""; position:absolute; left:0; top:1.95mm; width:1.3mm; height:1.3mm; border-radius:50%; background:var(--pink); }
+
+  .tools { display:flex; gap:3mm; }
+  .tool { display:flex; align-items:center; gap:2.4mm; padding:2.2mm 4mm 2.2mm 2.6mm; border-radius:99mm; border:.3mm solid var(--line); }
+  .tool .dot { display:grid; place-items:center; width:6.5mm; height:6.5mm; border-radius:50%; background:var(--ink); color:#fff; }
+  .tool .dot .ic { width:3.4mm; height:3.4mm; }
+  .tool b { display:block; font-size:9pt; color:var(--ink); line-height:1.2; }
+  .tool span { font-size:7.4pt; color:var(--mute); }
+
+  .role { display:flex; justify-content:space-between; align-items:baseline; gap:4mm; }
+  .role h3 { font-size:10.6pt; margin:0; }
+  .when { font-size:8.2pt; font-weight:600; color:var(--rasp); white-space:nowrap; }
+  .org { font-size:8.6pt; color:var(--mute); margin:.6mm 0 2.4mm; }
+  .exp li { margin-bottom:1.5mm; }
+
+  .brands { display:flex; flex-wrap:wrap; row-gap:1.2mm; line-height:1.6; }
+  .brands span { white-space:nowrap; }
+  .brands span + span::before { content:"·"; color:var(--pink); margin:0 2mm; font-weight:700; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:1.8mm; }
+  .chip { padding:1.4mm 3.4mm; border-radius:99mm; background:var(--blush); color:var(--ink); font-size:8.3pt; font-weight:500; }
+
+  footer { position:absolute; left:15mm; right:15mm; bottom:8mm; display:flex; justify-content:space-between; font-size:7.2pt; color:var(--mute); }
+  footer a { color:var(--rasp); text-decoration:none; font-weight:500; }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <span class="glow p"></span><span class="glow b"></span>
+
+  <header>
+    <div class="photo"><img src="../../public/images/judith-circle.jpg" alt="Judith Urevbu" /></div>
+    <div>
+      <h1>Judith <em>Urevbu</em></h1>
+      <p class="headline">Video Editor · Post-Production Specialist · Digital Content Creator</p>
+      <p class="contact">
+        <span>{{icon:mail}}<a href="mailto:judithurevbu@gmail.com">judithurevbu@gmail.com</a></span>
+        <span>{{icon:phone}}+234 802 825 0196</span>
+        <span>{{icon:map-pin}}Lagos, Nigeria</span>
+        <span>{{icon:globe}}<a href="https://judith-urevbu.vercel.app">judith-urevbu.vercel.app</a></span>
+        <span>{{icon:instagram}}<a href="https://www.instagram.com/judimplez/">@judimplez</a></span>
+        <span>{{icon:clock}}WAT (UTC+1) · Open to remote and international work</span>
+      </p>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b>5+</b><span>years editing</span></div>
+    <div class="stat"><b>15+</b><span>brand collaborations</span></div>
+    <div class="stat"><b>174K</b><span>Instagram audience</span></div>
+    <div class="stat"><b>Short &amp; long</b><span>form specialist</span></div>
+  </div>
+
+  <h2><span class="badge">{{icon:user-round}}</span>Professional Summary</h2>
+  <p class="lead">
+    Video Editor and Digital Content Creator with <strong>5+ years of experience</strong> turning raw footage into
+    scroll-stopping stories for brands and online audiences. I specialise in <strong>short-form</strong> (Instagram Reels,
+    TikTok) and <strong>long-form</strong> (YouTube) editing, from lifestyle vlogs and brand commercials to talking-head
+    videos, podcasts and event highlights. Advanced in <strong>Final Cut Pro</strong> and <strong>CapCut Pro</strong>, with a
+    sharp eye for pacing, colour and sound, and a creator&rsquo;s instinct for what keeps viewers watching. Trusted by
+    brands including Nestl&eacute; NANKID, Anker, Pepsodent and Golden Penny Foods to deliver on-brand content from brief to
+    final cut, independently and remotely.
+  </p>
+
+  <h2><span class="badge">{{icon:layers}}</span>Core Competencies</h2>
+  <div class="grid3">
+    <div>
+      <h3>Editing &amp; Post-Production</h3>
+      <ul>
+        <li>Long-form and short-form editing</li>
+        <li>Footage selection and assembly</li>
+        <li>Narrative structure and pacing</li>
+        <li>Colour correction</li>
+        <li>Sound design and audio clean-up</li>
+        <li>Transitions and visual effects</li>
+        <li>Captions and subtitles</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Content &amp; Platforms</h3>
+      <ul>
+        <li>Instagram Reels and TikTok</li>
+        <li>YouTube video production</li>
+        <li>Brand and commercial videos</li>
+        <li>Lifestyle storytelling</li>
+        <li>Podcast and talking-head editing</li>
+        <li>Hooks and audience retention</li>
+        <li>Trend-aware creative editing</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Professional</h3>
+      <ul>
+        <li>Brand alignment and visual consistency</li>
+        <li>Remote collaboration</li>
+        <li>Brief interpretation</li>
+        <li>Feedback implementation</li>
+        <li>Project and deadline management</li>
+        <li>Clear client communication</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="badge">{{icon:monitor-play}}</span>Software</h2>
+  <div class="tools">
+    <div class="tool"><span class="dot">{{icon:clapperboard}}</span><span><b>Final Cut Pro</b><span>Advanced</span></span></div>
+    <div class="tool"><span class="dot">{{icon:clapperboard}}</span><span><b>CapCut Pro</b><span>Advanced</span></span></div>
+  </div>
+
+  <h2><span class="badge">{{icon:sparkles}}</span>Brand Collaborations</h2>
+  <p class="brands">
+    <span>Nestl&eacute; NANKID</span><span>Anker</span><span>Burger King</span><span>LG</span><span>Pepsodent</span><span>Golden Penny Foods</span><span>Mamador</span><span>Johnvents Foods</span><span>Ayoola Foods</span><span>Haier Thermocool</span><span>Addme</span><span>Beauty Hut</span><span>Buchi Mix</span><span>Travel Xperia</span><span>Of Max Homes</span>
+  </p>
+
+  <footer><span>Judith Urevbu · Video Editor CV</span><span>1 / 2</span></footer>
+</section>
+
+<section class="page">
+  <span class="glow p"></span><span class="glow b"></span>
+
+  <h2 style="margin-top:0"><span class="badge">{{icon:briefcase-business}}</span>Professional Experience</h2>
+  <div class="role">
+    <h3>Independent Video Editor &amp; Digital Content Creator</h3>
+    <span class="when">2020 – Present</span>
+  </div>
+  <p class="org">Self-employed · Lagos, Nigeria · Remote</p>
+  <p style="margin-bottom:2.4mm">End-to-end video editing and post-production for brands and creators across Instagram, TikTok and YouTube, from raw footage to final delivery.</p>
+  <ul class="exp">
+    <li><strong>Long-form:</strong> edit and produce YouTube videos, lifestyle vlogs and digital stories with clear structure, strong openings and steady pacing.</li>
+    <li><strong>Short-form:</strong> create Reels and TikToks built for retention, with hooks in the first seconds, tight cuts and on-trend formats.</li>
+    <li><strong>Brand content:</strong> produce promotional and commercial videos for consumer brands including Nestl&eacute; NANKID, Anker, Pepsodent, Golden Penny Foods, Ayoola Foods, Haier Thermocool and Addme, matched to each brand&rsquo;s creative direction.</li>
+    <li><strong>Post-production:</strong> transform raw footage into polished edits through careful selection, colour correction, sound design, transitions and captions.</li>
+    <li><strong>Talking-head and podcasts:</strong> edit interviews and podcast episodes with clean cuts, clear audio and accessible subtitles.</li>
+    <li><strong>Events:</strong> edit wedding, bridal and celebration highlights that capture the emotion of the day.</li>
+    <li><strong>Delivery:</strong> manage projects independently, act on client feedback quickly and deliver on agreed timelines.</li>
+    <li><strong>Strategy:</strong> apply knowledge of platform trends and audience behaviour to every creative decision.</li>
+  </ul>
+
+  <h2><span class="badge">{{icon:clapperboard}}</span>Selected Project Categories</h2>
+  <div class="chips">
+    <span class="chip">YouTube Vlogs &amp; Lifestyle</span>
+    <span class="chip">Instagram Reels &amp; TikTok</span>
+    <span class="chip">Brand Campaigns &amp; Product Commercials</span>
+    <span class="chip">Talking-Head Videos &amp; Interviews</span>
+    <span class="chip">Podcast Editing</span>
+    <span class="chip">Wedding &amp; Event Highlights</span>
+    <span class="chip">Digital Storytelling &amp; Promotional Content</span>
+  </div>
+
+  <h2><span class="badge">{{icon:badge-check}}</span>Key Strengths</h2>
+  <div class="grid2">
+    <ul>
+      <li><strong>Visual storytelling</strong> with strong creative judgement</li>
+      <li><strong>Audience insight</strong> into how people watch and engage online</li>
+      <li><strong>Detail-oriented</strong> from first cut to final export</li>
+      <li><strong>Independent</strong> and reliable across multiple projects</li>
+    </ul>
+    <ul>
+      <li><strong>Adaptable</strong> to different styles, formats and briefs</li>
+      <li><strong>Open to feedback</strong> and quick to implement it</li>
+      <li><strong>Remote-ready</strong>, with clear, timely communication</li>
+      <li><strong>Brand-minded</strong> problem solver</li>
+    </ul>
+  </div>
+
+  <h2><span class="badge">{{icon:graduation-cap}}</span>Education &amp; Professional Development</h2>
+  <div class="role">
+    <h3>Video Editing &amp; Post-Production</h3>
+    <span class="when">Ongoing</span>
+  </div>
+  <p class="org">Self-taught · Continuous professional development</p>
+  <p>Built through independent study, hands-on client projects and continuous practice in the technical and creative craft of editing.</p>
+
+  <footer><span>Portfolio: <a href="https://judith-urevbu.vercel.app">judith-urevbu.vercel.app</a></span><span>2 / 2</span></footer>
+</section>
+
+</body>
+</html>

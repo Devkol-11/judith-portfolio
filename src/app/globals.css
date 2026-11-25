@@ -144,6 +144,15 @@ body {
     fill: #ffb3d4;
   }
 
+  /* Portrait rises in after her name, then drifts gently */
+  .portrait-in {
+    animation: portrait-in 1100ms var(--ease-out) 350ms both;
+  }
+
+  .portrait-float {
+    animation: float 7s ease-in-out 1.6s infinite;
+  }
+
   /* Scroll hint: a pink bead slides down the line */
   .scroll-cue::after {
     content: "";
@@ -279,6 +288,24 @@ body {
   }
 }
 
+@keyframes portrait-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.94);
+    filter: blur(8px);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 @keyframes rise-in-soft {
   from {
     opacity: 0;
@@ -378,6 +405,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hero-exit,
   .band-in,
+  .portrait-in,
+  .portrait-float,
   .reel-in,
   .player[open],
   .bounce-letter,

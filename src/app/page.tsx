@@ -1,11 +1,15 @@
-import { ArrowUp, Mail } from "lucide-react";
+import { ArrowUp, Download, Mail } from "lucide-react";
 import { siInstagram } from "simple-icons";
 import { Fragment } from "react";
 import { BrandMarquee } from "@/components/BrandMarquee";
 import { HeroName } from "@/components/HeroName";
+import { HeroPortrait } from "@/components/HeroPortrait";
 import { WorkSection } from "@/components/WorkSection";
 import { WaterBackground } from "@/components/WaterBackground";
 import { brands, contact, profile, reels, type Brand } from "@/content/site";
+
+/** Her CV, built from project_md/cv/cv.html */
+const CV_PATH = "/judith-urevbu-cv.pdf";
 
 const order = (i: number) => ({ "--i": i }) as React.CSSProperties;
 
@@ -69,6 +73,14 @@ export default function Home() {
               Work
             </a>
             <a
+              href={CV_PATH}
+              download
+              className="text-ink/75 hover:text-ink inline-flex items-center gap-1.5 transition-colors"
+            >
+              <Download size={15} strokeWidth={2} aria-hidden="true" />
+              CV
+            </a>
+            <a
               href="#contact"
               className="bg-pop text-ink rounded-full px-4 py-1.5 font-medium transition-transform duration-150 active:scale-[0.97]"
             >
@@ -83,17 +95,23 @@ export default function Home() {
         <section className="relative isolate flex min-h-dvh flex-col overflow-hidden bg-[linear-gradient(180deg,#eef6fd_0%,#ffffff_85%)] pt-14">
           <WaterBackground />
 
-          <div className="hero-exit mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center px-6 py-16 text-center">
-            <p className="text-mute text-xl md:text-2xl">
-              <FlowText text="Welcome, I’m" start={0} />
-            </p>
-            <HeroName first={firstName} last={lastName} />
-            <p className="text-ink mt-9 max-w-[22ch] text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.25] font-medium tracking-[-0.025em] text-balance">
-              <FlowText text={profile.headline} emphasis={profile.headlineEmphasis} start={9} step={0.22} />
-            </p>
-            <p className="fade-in text-mute mt-5 max-w-md text-base md:text-lg" style={order(15)}>
-              {profile.intro}
-            </p>
+          {/* Text left, portrait right on desktop; portrait first on phones */}
+          <div className="hero-exit mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 px-6 py-14 md:grid-cols-[1.15fr_1fr] md:gap-10 lg:gap-16">
+            <div className="order-2 text-center md:order-1 md:text-left">
+              <p className="text-mute text-xl md:text-2xl">
+                <FlowText text="Welcome, I’m" start={0} />
+              </p>
+              <HeroName first={firstName} last={lastName} />
+              <p className="text-ink mx-auto mt-9 max-w-[22ch] text-[clamp(1.5rem,2.6vw,2.125rem)] leading-tight font-medium tracking-tight text-balance md:mx-0">
+                <FlowText text={profile.headline} emphasis={profile.headlineEmphasis} start={9} step={0.22} />
+              </p>
+              <p className="fade-in text-mute mx-auto mt-5 max-w-md text-base md:mx-0 md:text-lg" style={order(15)}>
+                {profile.intro}
+              </p>
+            </div>
+            <div className="order-1 md:order-2">
+              <HeroPortrait name={profile.name} instagram={instagram} />
+            </div>
           </div>
 
           <a
@@ -146,13 +164,26 @@ export default function Home() {
                 Tell me about your brand, the story you want to tell and your timeline.
               </p>
 
-              <div className="mt-11 flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
+              <div className="mt-11 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
                 <a
                   href={`mailto:${contact.email}`}
                   className="bg-pop text-ink inline-flex items-center gap-2.5 rounded-full px-6 py-4 text-base font-semibold shadow-[0_16px_40px_-14px_rgb(255_95_162/0.9)] transition-transform duration-150 hover:-translate-y-0.5 active:scale-[0.97] sm:px-7 sm:text-lg"
                 >
                   <Mail size={20} strokeWidth={2} aria-hidden="true" />
                   {contact.email}
+                </a>
+                <a
+                  href={CV_PATH}
+                  download
+                  className="group inline-flex items-center gap-2.5 rounded-full bg-white/80 px-6 py-4 font-semibold shadow-[0_8px_24px_-12px_rgb(29_29_31/0.3)] ring-1 ring-black/5 backdrop-blur transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:ring-pop"
+                >
+                  <Download
+                    size={19}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                    className="text-accent transition-transform duration-200 group-hover:translate-y-0.5"
+                  />
+                  Download CV
                 </a>
                 {instagram && (
                   <a

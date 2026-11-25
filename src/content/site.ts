@@ -25,6 +25,9 @@ export const brands = {
   ayoola: { name: "Ayoola Foods", logo: "/images/brands/ayoola-foods.png", featured: true },
   addme: { name: "Addme", logo: "/images/brands/addme.png", featured: true },
   jtb: { name: "Judith The Brand", logo: "/images/brands/judith-the-brand.png", featured: true },
+  // Brands from her reels without a logo file: named in the player, no badge on the card
+  ofmax: { name: "Of Max Homes" },
+  thermocool: { name: "Haier Thermocool" },
 } satisfies Record<string, Brand>;
 
 export type BrandKey = keyof typeof brands;
@@ -35,8 +38,8 @@ export type Reel = {
   url: string;
   /** Year posted (decoded from the link) */
   year: string;
-  /** Brand she made it with (read from the reel's collaborators and caption) */
-  brand: BrandKey;
+  /** Brand she made it with (read from the reel's collaborators and caption); omit for her own work */
+  brand?: BrandKey;
   description: string;
 };
 
@@ -67,61 +70,130 @@ export const contact = {
 
 export const reels: Reel[] = [
   {
+    title: "Lace and light",
+    url: "https://www.instagram.com/reel/Dd9Rb75IfMt/",
+    year: "2026",
+    description: "Bridal content shoot",
+  },
+  {
     title: "Low battery? Not today",
     url: "https://www.instagram.com/reel/DdhAt7qK1FY/",
     year: "2026",
     brand: "anker",
-    description:
-      "A day out with the Soundcore R50i earbuds and a MagGo power bank: music on, battery worries off.",
+    description: "Anker on-the-go lifestyle",
   },
   {
     title: "Bedtime hunger",
     url: "https://www.instagram.com/reel/DcdQ7MGKe6t/",
     year: "2026",
     brand: "nankid",
-    description: "A playful bedtime moment for NANKID 4: the drink to make before the kids suddenly get hungry.",
+    description: "NANKID bedtime moments",
   },
   {
     title: "They grew overnight",
     url: "https://www.instagram.com/reel/DcIrE2WqL6U/",
     year: "2026",
     brand: "nankid",
-    description: "A short, heartfelt point-of-view piece on how fast children grow, made for NANKID 4.",
+    description: "NANKID growing-up story",
   },
   {
     title: "School-morning routine",
     url: "https://www.instagram.com/reel/DYElNQCqzZ1/",
     year: "2026",
     brand: "nankid",
-    description:
-      "Breakfast, giggles and a cup they actually finish: NANKID OPTIPRO 4 woven into a warm school-morning story.",
+    description: "NANKID school-morning routine",
   },
   {
     title: "Christmas pizza night",
     url: "https://www.instagram.com/reel/DSmgOsUCvPL/",
     year: "2025",
     brand: "ayoola",
-    description: "Making pizza with the kids using Ayoola Potato Flour, for the Ayoola 12 Days to Christmas Challenge.",
+    description: "Ayoola festive family kitchen",
   },
   {
     title: "The Holiday Edit",
     url: "https://www.instagram.com/reel/DSCU2ePCIPW/",
     year: "2025",
     brand: "jtb",
-    description: "Launch film for the Cozy Me Up pajamas, Judith The Brand's holiday collection.",
+    description: "JTB holiday pajama campaign",
   },
   {
     title: "The gift of ease",
     url: "https://www.instagram.com/reel/DDzncqnNlQC/",
     year: "2024",
     brand: "addme",
-    description: "A festive date-night story for Addme, showing stress-free holiday cooking.",
+    description: "Addme holiday date night",
   },
   {
     title: "The Amalfi Edit",
     url: "https://www.instagram.com/reel/DaPl3e0NlkS/",
     year: "2026",
     brand: "jtb",
-    description: "A sunlit launch film for The Amalfi Edit, Judith The Brand's summer collection.",
+    description: "JTB summer collection launch",
+  },
+  {
+    title: "Calm weekday reset",
+    url: "https://www.instagram.com/reel/DecOrkWqMXR/",
+    year: "2026",
+    description: "Weekday self-care reset",
+  },
+  {
+    title: "The Chocoh challenge",
+    url: "https://www.instagram.com/reel/DeW7kn3qZso/",
+    year: "2026",
+    brand: "goldenPenny",
+    description: "Golden Penny creative challenge",
+  },
+  {
+    title: "Lunchbox morning routine",
+    url: "https://www.instagram.com/reel/DeHnRfqqFOV/",
+    year: "2026",
+    description: "Lunchbox mom lifestyle",
+  },
+  {
+    title: "Holiday with the kids",
+    url: "https://www.instagram.com/reel/DcjQzE_K1Nv/",
+    year: "2026",
+    brand: "pepsodent",
+    description: "Pepsodent holiday family fun",
+  },
+  {
+    title: "Things that make me feel rich",
+    url: "https://www.instagram.com/reel/DZhWS7wKqnA/",
+    year: "2026",
+    brand: "johnvents",
+    description: "Everyday luxury lifestyle",
+  },
+  {
+    title: "Countertop glow-up",
+    url: "https://www.instagram.com/reel/DSdMa9LiqCK/",
+    year: "2025",
+    brand: "ofmax",
+    description: "Kitchen décor glow-up",
+  },
+  {
+    title: "One less worry",
+    url: "https://www.instagram.com/reel/DP0r70YCCLk/",
+    year: "2025",
+    brand: "thermocool",
+    description: "Thermocool busy-mom lifestyle",
+  },
+  {
+    title: "Six months of you",
+    url: "https://www.instagram.com/reel/DdygibBgo_z/",
+    year: "2026",
+    description: "Baby milestone shoot",
+  },
+  {
+    title: "Mrs Dapson's entrance",
+    url: "https://www.instagram.com/reel/DdKA0RQo9eE/",
+    year: "2026",
+    description: "Wedding guest glam",
+  },
+  {
+    title: "An asoebi slay",
+    url: "https://www.instagram.com/reel/Dc8YWxJKziU/",
+    year: "2026",
+    description: "Asoebi owambe glam",
   },
 ];
